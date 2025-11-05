@@ -1,0 +1,91 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <h3>Create a New Listing</h3>
+        <form class="listings-form" method="POST" action="/listings" enctype="multipart/form-data" novalidate>
+            
+            <!-- Title -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="listing[title]" placeholder="Enter a title" class="form-control" required>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="listing[description]" placeholder="Enter description" class="form-control" required></textarea>
+            </div>
+
+            <!-- Image -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload Image</label>
+                <input type="file" name="listing[image]" class="form-control" accept="image/*" required>
+            </div>
+
+            <!-- Price and Location Row -->
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" name="listing[price]" placeholder="1200" class="form-control" required>
+                </div>
+                
+                <!-- Location with Autocomplete + Current Location -->
+                <div class="mb-3 col-md-8 position-relative">
+                    <label for="location" class="form-label">Location</label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="location-input"
+                            name="listing[location]" 
+                            placeholder="Search or use current location" 
+                            class="form-control" 
+                            autocomplete="off"
+                            required>
+                        <button 
+                            type="button" 
+                            id="current-location-btn" 
+                            class="btn btn-outline-secondary"
+                            title="Use my current location">
+                            <i class="fas fa-location-crosshairs"></i>
+                        </button>
+                    </div>
+                    <div id="location-suggestions" class="location-suggestions"></div>
+                    <div class="form-text">
+                        <span id="location-status">Type to search or click 📍 to use your current location</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Country -->
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" id="country-input" name="listing[country]" placeholder="Country" class="form-control" required>
+            </div>
+
+            <!-- Preview Map -->
+            <div class="mb-3">
+                <label class="form-label">Location Preview</label>
+                <div id="preview-map" style="height: 300px; border-radius: 0.5rem; background: #f8f9fa;">
+                    <div class="map-loading" id="map-loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading map...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button - KEEP INSIDE FORM -->
+            <button type="submit" class="btn add-btn">Add Listing</button>
+        </form>
+    </div>
+</div>
+
+<!-- Load Mapbox GL JS -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+
+<script>
+    const mapToken = '<%= process.env.MAP_TOKEN %>';
+</script>
+
+<script src="/js/locationAutocomplete.js"></script>

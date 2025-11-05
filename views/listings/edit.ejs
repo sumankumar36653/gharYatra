@@ -1,0 +1,106 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <h3>Edit your Listing</h3>
+        <form class="listings-form" method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data">
+            
+            <!-- Title -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="listing[title]" value="<%= listing.title %>" class="form-control" required>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="listing[description]" class="form-control" required><%= listing.description %></textarea>
+            </div>
+
+            <!-- Image preview (blurred) -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Current Image</label>
+                <div class="image-preview-container">
+                    <img src="<%= originalImageUrl %>" alt="preview" class="edit-image-preview">
+                    <p class="text-muted small mt-2">Upload a new image to replace</p>
+                </div>
+            </div>
+
+            <!-- Upload new image -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload New Image (Optional)</label>
+                <input type="file" name="listing[image]" class="form-control" accept="image/*">
+            </div>
+
+            <!-- Price and Location row -->
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" name="listing[price]" value="<%= listing.price %>" class="form-control" required>
+                </div>
+                
+                <!-- Location with Autocomplete + Current Location -->
+                <div class="mb-3 col-md-8 position-relative">
+                    <label for="location" class="form-label">Location</label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="location-input"
+                            name="listing[location]" 
+                            value="<%= listing.location %>"
+                            placeholder="Search or use current location" 
+                            class="form-control" 
+                            autocomplete="off"
+                            required>
+                        <button 
+                            type="button" 
+                            id="current-location-btn" 
+                            class="btn btn-outline-secondary"
+                            title="Use my current location">
+                            <i class="fas fa-location-crosshairs"></i>
+                        </button>
+                    </div>
+                    <div id="location-suggestions" class="location-suggestions"></div>
+                    <div class="form-text">
+                        <span id="location-status">Current location or search for a new one</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Country -->
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" id="country-input" name="listing[country]" value="<%= listing.country %>" class="form-control" required>
+            </div>
+
+            <!-- Preview Map -->
+            <div class="mb-3">
+                <label class="form-label">Location Preview</label>
+                <div id="preview-map" style="height: 300px; border-radius: 0.5rem;"></div>
+            </div>
+
+            <button class="btn add-btn">Update Listing</button>
+        </form>
+    </div>
+</div>
+
+<!-- Load Mapbox GL JS -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+
+<script>
+    const mapToken = '<%= process.env.MAP_TOKEN %>';
+    const existingLocation = {
+        coordinates: <%= JSON.stringify(listing.geometry.coordinates) %>,
+        name: '<%= listing.location %>'
+    };
+</script>
+
+<script src="/js/locationAutocomplete.js"></script>
+
+<script>
+    // Pre-populate the map with existing location
+    if (existingLocation.coordinates) {
+        selectedCoordinates = existingLocation.coordinates;
+        updatePreviewMap(existingLocation.coordinates, existingLocation.name);
+    }
+</script>

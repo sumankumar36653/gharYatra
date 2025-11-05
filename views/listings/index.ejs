@@ -1,0 +1,92 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="container-fluid listing-hero py-3">
+    <div class="listing-toolbar d-flex flex-column flex-lg-row align-items-lg-center gap-3">
+        <div class="category-strip d-flex flex-wrap flex-lg-nowrap gap-3 overflow-auto">
+            <a class="category-pill active" href="#"><i class="fa-solid fa-fire"></i> Trending</a>
+            <a class="category-pill" href="#"><i class="fa-solid fa-mountain-sun"></i> Amazing views</a>
+            <a class="category-pill" href="#"><i class="fa-solid fa-umbrella-beach"></i> Surfing</a>
+            <a class="category-pill d-none d-md-inline-flex" href="#"><i class="fa-solid fa-water-ladder"></i> Amazing pools</a>
+            <a class="category-pill d-none d-md-inline-flex" href="#"><i class="fa-solid fa-umbrella"></i> Beach</a>
+            <a class="category-pill d-none d-md-inline-flex" href="#"><i class="fa-solid fa-house-chimney"></i> Cabins</a>
+            <a class="category-pill d-none d-lg-inline-flex" href="#"><i class="fa-solid fa-face-surprise"></i> OMG!</a>
+            <a class="category-pill d-none d-lg-inline-flex" href="#"><i class="fa-solid fa-water"></i> Lakefront</a>
+            <a class="category-pill d-none d-lg-inline-flex" href="#"><i class="fa-solid fa-tractor"></i> Farms</a>
+            <a class="category-pill d-none d-lg-inline-flex" href="#"><i class="fa-solid fa-bed"></i> Rooms</a>
+            <a class="category-pill d-none d-lg-inline-flex" href="#"><i class="fa-solid fa-city"></i> Iconic cities</a>
+            <a class="category-pill d-none d-lg-inline-flex" href="#"><i class="fa-solid fa-person-skiing"></i> Ski-in/out</a>
+            
+            <!-- More Categories Dropdown for Mobile -->
+            <div class="dropdown d-md-none">
+                <button class="category-pill dropdown-toggle" type="button" id="moreCategories" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-ellipsis"></i> More
+                </button>
+                <ul class="dropdown-menu category-dropdown" aria-labelledby="moreCategories">
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-water-ladder"></i> Amazing pools</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-umbrella"></i> Beach</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-house-chimney"></i> Cabins</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-face-surprise"></i> OMG!</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-water"></i> Lakefront</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-tractor"></i> Farms</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bed"></i> Rooms</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-city"></i> Iconic cities</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-person-skiing"></i> Ski-in/out</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="scroll-arrow d-none d-lg-flex">
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="toolbar-actions d-flex align-items-center gap-3 ms-lg-auto">
+            <button class="btn btn-outline-dark d-flex align-items-center gap-2">
+                <i class="fa-solid fa-sliders"></i>
+                Filters
+            </button>
+            <div class="toggle-wrapper d-none d-md-flex align-items-center gap-2">
+                <span class="small text-muted">Display total with taxes</span>
+                <div class="form-check form-switch m-0">
+                    <input class="form-check-input" type="checkbox" id="toggle-total-before-taxes">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container my-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-4">
+        <% for (let listing of allListings) { %>
+        <div class="col">
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+                <div class="card listing-card h-100" data-base-price="<%= listing.price %>">
+                    <div class="ratio ratio-4x3 listing-thumb">
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title mb-1"><%= listing.title %></h5>
+                            <% 
+                            let avgRating = 0;
+                            if(listing.reviews && listing.reviews.length > 0) {
+                                const sum = listing.reviews.reduce((acc, review) => acc + review.rating, 0);
+                                avgRating = (sum / listing.reviews.length).toFixed(1);
+                            }
+                            %>
+                            <% if(avgRating > 0) { %>
+                            <span class="rating-pill"><i class="fa-solid fa-star"></i> <%= avgRating %></span>
+                            <% } else { %>
+                            <span class="rating-pill"><i class="fa-solid fa-star"></i> New</span>
+                            <% } %>
+                        </div>
+                        <p class="card-text mb-1 text-muted"><%= listing.location %></p>
+                        <p class="card-text fw-semibold">₹<%= listing.price ? listing.price.toLocaleString("en-IN") : '0' %> night</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <% } %>
+    </div>
+</section>
+
+<script src="/js/taxCalculator.js"></script>
