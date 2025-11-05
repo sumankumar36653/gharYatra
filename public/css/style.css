@@ -68,12 +68,95 @@ body {
 
 /* ensure footer sits at bottom with compact height */
 .f-info {
-    flex-shrink: 0;
     background-color: #222;
     color: #fff;
     padding: 2rem 0;
+    margin-top: 4rem;
     border-top: 1px solid rgba(255,255,255,0.1);
-    margin-top: auto;
+}
+
+.f-info .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.f-info p {
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    background-color: #fe424d;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(254,66,77,0.4);
+}
+
+.social-icon i {
+    pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .f-info {
+        padding: 1.5rem 0;
+        margin-top: 3rem;
+    }
+    
+    .f-info p {
+        font-size: 0.85rem;
+    }
+    
+    .social-links {
+        gap: 1.5rem;
+    }
+    
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .f-info {
+        padding: 1.25rem 0;
+        margin-top: 2rem;
+    }
+    
+    .social-links {
+        gap: 1.25rem;
+    }
+    
+    .social-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
 }
 
 body{
@@ -985,17 +1068,23 @@ body{
 
 /* Footer Styles */
 .f-info {
-    flex-shrink: 0;
     background-color: #222;
     color: #fff;
     padding: 2rem 0;
+    margin-top: 4rem;
     border-top: 1px solid rgba(255,255,255,0.1);
-    margin-top: auto;
+}
+
+.f-info .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .f-info p {
-    margin: 0;
-    color: #ddd;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
 }
 
 .social-links {
@@ -1003,85 +1092,71 @@ body{
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    margin-top: 1rem;
 }
 
 .social-icon {
-    color: #222;
-    font-size: 1.5rem;
-    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 .social-icon:hover {
-    color: #fe424d;
-    transform: translateY(-2px);
+    background-color: #fe424d;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(254,66,77,0.4);
 }
 
-.login-prompt-card {
-    background: linear-gradient(135deg, #f7f7f7, #fff);
-    border: 2px dashed rgba(0,0,0,0.12);
-    border-radius: 18px;
-    padding: 3rem 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
+.social-icon i {
+    pointer-events: none;
 }
 
-.login-prompt-content i {
-    font-size: 3rem;
-    color: #fe424d;
-    margin-bottom: 1rem;
+/* Responsive */
+@media (max-width: 768px) {
+    .f-info {
+        padding: 1.5rem 0;
+        margin-top: 3rem;
+    }
+    
+    .f-info p {
+        font-size: 0.85rem;
+    }
+    
+    .social-links {
+        gap: 1.5rem;
+    }
+    
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
 }
 
-.login-prompt-content h4 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: #222;
-}
-
-.login-prompt-content p {
-    color: #666;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.login-prompt-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.btn-login, .btn-signup {
-    padding: 0.875rem 2rem;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.btn-login {
-    background: white;
-    border: 2px solid #222;
-    color: #222;
-}
-
-.btn-login:hover {
-    background: #222;
-    color: white;
-}
-
-.btn-signup {
-    background: linear-gradient(135deg, #fe424d, #ff6b6b);
-    border: none;
-    color: white;
-}
-
-.btn-signup:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(254,66,77,0.3);
+@media (max-width: 576px) {
+    .f-info {
+        padding: 1.25rem 0;
+        margin-top: 2rem;
+    }
+    
+    .social-links {
+        gap: 1.25rem;
+    }
+    
+    .social-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
 }
 
 /* Listing Card Styles */
